@@ -5,6 +5,7 @@ module Luis
     #
     # @param [Hash] options hash
     def initialize(options = {})
+      return if options == nil
       options.each do |key, value|
         instance_variable_set("@#{snake_case(key)}", value)
       end

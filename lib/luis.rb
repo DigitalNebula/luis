@@ -14,11 +14,11 @@ module Luis
   class << self
    attr_accessor :id, :subscription_key, :is_preview_mod, :is_verbose
   end
-  API_BASE_URI = 'https://api.projectoxford.ai/luis/v1/application'.freeze
+  API_BASE_URI = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/'.freeze
 
   def self.api_uri
     uri = API_BASE_URI
-    uri += '/preview' if is_preview_mod
+    #uri += '/preview' if is_preview_mod
     uri
   end
 
@@ -30,7 +30,9 @@ module Luis
     options = default_options
     options['q'] = query
     options['contextId'] = context_id if context_id
-    response = get(api_uri, query: options)
+    response = get(api_uri + id + '/', query: options)
+    puts options.inspect
+    puts api_uri
     Result.new JSON.parse(response.body)
   end
 
